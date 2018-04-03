@@ -9,7 +9,21 @@
         <a class="p-2 text-dark" href="generar-mesa">Mesa</a>        
         <a class="p-2 text-dark" href="calculadora"> Calculadora</a>     
       </nav>
+    
+      <c:if test="${empty usuario}">
+      
       <a class="btn btn-outline-primary" href="login">Login</a>
+      
+      </c:if>
+          <c:if test="${!empty usuario}">
+      <span class="badge badge-pill badge-primary">${usuario}</span>
+      <a href="backoffice/index.jsp">Backoffice</a>
+       <a class="btn btn-outline-danger" href="logout">Logout</a>
+       
+      
+      </c:if>
+      
+      
     </div>
     
     <div class="container">

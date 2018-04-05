@@ -27,7 +27,9 @@
 		<c:forEach items="${materiales}" var="material">
 		<tr>
 			<td>${material.id} </td>
-			<td>${material.nombre} </td>
+			<td><a href="backoffice/materiales?id=${material.id}&?nombre=${material.nombre }op=<%=MaterialesBackofficeController.OP_MOSTRAR_FORMULARIO%>">
+				${material.nombre}
+			</a></td>
 			<c:if test = "${material.precio > 6.0 && material.precio < 25.0}"> 
 				<td><span class="text-primary">${material.precio} &euro;</span></td>
 				</c:if>

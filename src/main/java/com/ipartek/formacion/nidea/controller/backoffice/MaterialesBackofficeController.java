@@ -126,11 +126,12 @@ public class MaterialesBackofficeController extends HttpServlet {
 			// enviar como atributo la lista de materiales
 
 		} catch (Exception e) {
+			alert = new Alert();
 			dispatcher = request.getRequestDispatcher(VIEW_INDEX);
 			e.printStackTrace();
 			// view = "materiales/index.jsp";
 		} finally {
-
+			request.setAttribute("alert", alert);
 			dispatcher.forward(request, response);
 		}
 	}
@@ -141,7 +142,9 @@ public class MaterialesBackofficeController extends HttpServlet {
 	}
 
 	private void buscar(HttpServletRequest request) {
-		// TODO Auto-generated method stub
+		alert = new Alert("Busqueda para: " + search, Alert.TIPO_PRIMARY);
+		request.setAttribute("materiales", dao.getAll());
+		dispatcher = request.getRequestDispatcher(VIEW_INDEX);
 
 	}
 
@@ -160,9 +163,14 @@ public class MaterialesBackofficeController extends HttpServlet {
 	private void mostrarFormulario(HttpServletRequest request) {
 		Material material = new Material();
 		if (id > -1) {
+			alert = new Alert("Mostramos Detalle id:" + id, Alert.TIPO_WARNING);
 
+		} else {
+			alert = new Alert("Nuevo Producto", Alert.TIPO_WARNING);
 		}
 		request.setAttribute("materiales", dao.getAll());
+		request.setAttribute("id_material", id);
+		// request.setAttribute("id_nombre", o);
 		dispatcher = request.getRequestDispatcher(VIEW_FORM);
 	}
 
@@ -181,7 +189,6 @@ public class MaterialesBackofficeController extends HttpServlet {
 		if (request.getParameter("precio") != null) {
 			precio = Float.parseFloat(request.getParameter("precio"));
 		}
-		;
 
 	}
 

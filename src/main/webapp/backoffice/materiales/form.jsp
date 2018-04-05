@@ -1,25 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <title>Bootstrap Example</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-</head>
-<body>
+
+<%@page import="com.ipartek.formacion.nidea.controller.backoffice.MaterialesBackofficeController"%>
+<%@include file="/templates/head.jsp" %>
+<%@include file="/templates/navbar.jsp" %>
+<%@include file="/templates/alert.jsp" %>
+
+<a href="backoffice/materiales?op=21" title="Ir la página anterior">Volver</a>
 
 <div class="container">
   <h2>Formulario</h2>
   <form action="/action_page.php">
     <div class="form-group">
       <label for="email">ID:</label>
-      <input type="number" class="form-control" id="id" placeholder="Enter id" name="email">
+      <input type="number" class="form-control" id="id" placeholder="Enter id" name="id" value="${id_material}">
     </div>
     <div class="form-group">
       <label for="pwd">Nombre:</label>
-      <input type="text" class="form-control" id="nombre" placeholder="Enter nombre" name="nombre">
+      <input type="text" class="form-control" id="nombre" placeholder="Enter nombre" name="nombre" v>
     </div>
     <div class="form-group">
       <label for="pwd">Precio:</label>

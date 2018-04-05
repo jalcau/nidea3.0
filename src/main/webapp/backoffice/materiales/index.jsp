@@ -1,3 +1,4 @@
+<%@page import="com.ipartek.formacion.nidea.controller.backoffice.MaterialesBackofficeController"%>
 <%@include file="/templates/head.jsp" %>
 <%@include file="/templates/navbar.jsp" %>
 <%@include file="/templates/alert.jsp" %>
@@ -9,6 +10,7 @@
 <form action="backoffice/materiales" method="get">
 	<input type="text" name="search" required placeholder="Nombre del Material">
 	<input type="submit" value="Buscar">	
+	<input type="hidden" name="op" value= "<%=MaterialesBackofficeController.OP_BUSQUEDA%>">
 </form>
 
 <table id="example" class="table table-striped table-bordered" style="width:100%">
@@ -30,7 +32,7 @@
 				<td><span class="text-primary">${material.precio} &euro;</span></td>
 				</c:if>
 				<c:if test = "${material.precio <= 6.0}"> 
-				<td> ${material.precio} &euro</td>
+				<td> ${material.precio} &euro;</td>
 				</c:if>
 				<c:if test = "${material.precio >= 25.0}"> 
 				<td><span class="text-danger">${material.precio} &euro;</span></td>
@@ -42,23 +44,4 @@
    </table>
   
     
-    <ol>
-	<c:forEach items="${materiales}" var="material">
-	  <c:choose>
-         
-         <c:when test = "${material.precio > 6.0 && material.precio < 25.0}">
-			<li>${material.nombre} - <span class="text-primary">${material.precio} &euro;</span> </li>
-           
-         </c:when>
-         <c:when test = "${material.precio <= 6.0}">
-			<li>${material.nombre} - ${material.precio} &euro; </li>
-			</c:when>
-			      <c:when test = "${material.precio >= 25.0}">
-		 <li>${material.nombre} - <span class="text-danger">${material.precio} &euro;</span> </li>
-			</c:when>
-         </c:choose>
-		 
-	</c:forEach>
-	
-</ol>
-    
+  

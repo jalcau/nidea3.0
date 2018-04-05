@@ -26,11 +26,11 @@
 		<tr>
 			<td>${material.id} </td>
 			<td>${material.nombre} </td>
-			<c:if test = ""${material.precio > 6.0 && material.precio < 25.0}"> 
+			<c:if test = "${material.precio > 6.0 && material.precio < 25.0}"> 
 				<td><span class="text-primary">${material.precio} &euro;</span></td>
 				</c:if>
-				<c:if test = ""${material.precio <= 6.0}"> 
-				<td>${material.nombre} - ${material.precio} &euro</td>
+				<c:if test = "${material.precio <= 6.0}"> 
+				<td> ${material.precio} &euro</td>
 				</c:if>
 				<c:if test = "${material.precio >= 25.0}"> 
 				<td><span class="text-danger">${material.precio} &euro;</span></td>

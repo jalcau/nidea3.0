@@ -4,11 +4,11 @@
 <%@include file="/templates/navbar.jsp" %>
 <%@include file="/templates/alert.jsp" %>
 
-<a href="backoffice/materiales?op=21" title="Ir la página anterior">Volver</a>
+<a href="backoffice/materiales" title="Ir la página anterior">Volver</a>
 
 <div class="container">
   <h2>Formulario</h2>
-  <form action="/action_page.php">
+  <form action="backoffice/materiales" method="post">
     <div class="form-group">
       <label for="email">ID:</label>
       <input type="number" class="form-control" id="id" placeholder="Enter id" name="id" value="${id_material}">
@@ -24,7 +24,28 @@
     <div class="checkbox">
       <label><input type="checkbox" name="remember"> Remember me</label>
     </div>
-    <button type="button" class="btn btn-primary">Modificar</button>
+  <div class="form-group row">
+  <c:if test="${ id_material == -1}">
+	    <div class="col-sm-12">
+	    <input type="hidden" name="op" value="<%=MaterialesBackofficeController.OP_GUARDAR%>">
+	      <button type="submit" class="btn btn-primary btn-lg btn-block">Crear</button>
+	   </div>
+	   </c:if>
+	  </div>
+	  
+	   <c:if test="${ id_material >-1}">
+	  <div class="form-group row">
+	    <div class="col-sm-6">
+	     <input type="hidden" name="op" value="<%=MaterialesBackofficeController.OP_GUARDAR%>"> 	
+	      <button type="submit" class="btn btn-success btn-lg btn-block">Modificar</button>
+	    </div>
+	    <div class="col-sm-6">
+	        <a href="backoffice/materiales?id=${id_material}&op=<%=MaterialesBackofficeController.OP_ELIMINAR%>"  class="btn btn-danger btn-lg btn-block">Eliminar</a>
+	    </div>
+	  </div>
+	  </c:if>
+	</form>
+</div>
     <button type="submit" class="btn btn-default">Submit</button>
     
   </form>

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 import com.ipartek.formacion.nidea.pojo.Material;
 
-public class MaterialDAO {
+public class MaterialDAO implements Persistible<Material> {
 
 	private static MaterialDAO INSTANCE = null;
 
@@ -87,6 +87,24 @@ public class MaterialDAO {
 		}
 
 		return lista;
+	}
+
+	@Override
+	public Material getById(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean save(Material pojo) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean delete(int id) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

@@ -11,6 +11,8 @@
 	<input type="text" name="search" required placeholder="Nombre del Material">
 	<input type="submit" value="Buscar">	
 	<input type="hidden" name="op" value= "<%=MaterialesBackofficeController.OP_BUSQUEDA%>">
+	<a class="btn btn-outline-primary" href="backoffice/materiales?op=<%=MaterialesBackofficeController.OP_MOSTRAR_FORMULARIO%>">Crear Nuevo</a>
+	
 </form>
 
 <table id="example" class="table table-striped table-bordered" style="width:100%">
@@ -27,7 +29,7 @@
 		<c:forEach items="${materiales}" var="material">
 		<tr>
 			<td>${material.id} </td>
-			<td><a href="backoffice/materiales?id=${material.id}&?nombre=${material.nombre }op=<%=MaterialesBackofficeController.OP_MOSTRAR_FORMULARIO%>">
+			<td><a href="backoffice/materiales?id=${material.id}&op=<%=MaterialesBackofficeController.OP_MOSTRAR_FORMULARIO%>">
 				${material.nombre}
 			</a></td>
 			<c:if test = "${material.precio > 6.0 && material.precio < 25.0}"> 

@@ -151,6 +151,7 @@ public class MaterialDAO implements Persistible<Material> {
 		}
 		return resul;
 	}
+	
 
 	@Override
 	public Material mapper(ResultSet rs) throws SQLException {
@@ -162,6 +163,23 @@ public class MaterialDAO implements Persistible<Material> {
 			m.setPrecio(rs.getFloat("precio"));
 		}
 		return m;
+	}
+
+	@Override
+	public boolean busquqeda(String nombre) {
+		
+		boolean resul = false;
+		String sql = "SELECT `id`, `nombre`, `precio` FROM `material` WHERE `nombre` LIKE \'?\' ORDER BY `id` DESC LIMIT 500";
+		try (Connection con = ConnectionManager.getConnection(); PreparedStatement pst = con.prepareStatement(sql);) {
+			pst.setString(1, nombre);
+			int affectedRows = pst.executeUpdate();
+			if (affectedRows == 1) {
+				resul = true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return resul;
 	}
 
 }

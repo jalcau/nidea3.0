@@ -51,5 +51,7 @@ public interface Persistible<P> {
 	 * @return
 	 */
 	public P mapper(ResultSet rs) throws SQLException;
+	
+	public boolean busquqeda (String nombre);
 
 }

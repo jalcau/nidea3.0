@@ -11,7 +11,7 @@
   <form action="backoffice/materiales" method="post">
     <div class="form-group">
       <label for="email">ID:</label>
-      <input type="number" class="form-control" id="id" placeholder="Enter id" name="id" value="${material.id}">
+      <input type="number" class="form-control" id="id" placeholder="Enter id" name="id" readonly value="${material.id}">
     </div>
     <div class="form-group">
       <label for="pwd">Nombre:</label>
@@ -46,7 +46,7 @@
 	  </c:if>
 	</form>
 </div>
-    <button type="submit" class="btn btn-default">Submit</button>
+  
     
   </form>
 </div>

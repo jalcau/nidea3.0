@@ -145,7 +145,7 @@ public class MaterialesBackofficeController extends HttpServlet {
 		String precio1 = String.valueOf(precio);
 
 		material.setPrecio(precio);
-
+		if(!dao.busquqeda(nombre)) {
 		if (nombre != "" && precio > 0) {
 			if (dao.save(material)) {// Llamamos al save de materialDAo
 				alert = new Alert("Material guardado", Alert.TIPO_PRIMARY);
@@ -166,6 +166,11 @@ public class MaterialesBackofficeController extends HttpServlet {
 				request.setAttribute("material", material);
 				dispatcher = request.getRequestDispatcher(VIEW_FORM);
 			}
+		}
+		}else {
+			alert = new Alert("Lo sentimos pero el material ya existe", Alert.TIPO_DANGER);
+			request.setAttribute("material", material);
+			dispatcher = request.getRequestDispatcher(VIEW_FORM);
 		}
 
 	}

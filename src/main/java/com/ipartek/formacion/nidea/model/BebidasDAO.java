@@ -38,4 +38,10 @@ public class BebidasDAO implements Persistible<Bebida> {
 		return null;
 	}
 
+	@Override
+	public boolean busquqeda(String nombre) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

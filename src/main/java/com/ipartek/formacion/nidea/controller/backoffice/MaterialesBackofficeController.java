@@ -1,6 +1,7 @@
 package com.ipartek.formacion.nidea.controller.backoffice;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -37,6 +38,7 @@ public class MaterialesBackofficeController extends HttpServlet {
 	// search buscador por nombre material;
 	private String nombre, search;
 	private float precio;
+	private String precio1;
 	private int op;// operacion a realizar
 
 	/**
@@ -136,19 +138,36 @@ public class MaterialesBackofficeController extends HttpServlet {
 		}
 	}
 
-	private void guardar(HttpServletRequest request) {
+	private void guardar(HttpServletRequest request) throws SQLException {
 		Material material = new Material();
-		if (id == -1) {
-			alert = new Alert("Creado Nuevo Material ", Alert.TIPO_PRIMARY);
-			material.setNombre("Nuevo");
+		material.setId(id);
+		material.setNombre(nombre);
+		String precio1 = String.valueOf(precio);
+
+		material.setPrecio(precio);
+
+		if (nombre != "" && precio > 0) {
+			if (dao.save(material)) {// Llamamos al save de materialDAo
+				alert = new Alert("Material guardado", Alert.TIPO_PRIMARY);
+
+			} else {
+				alert = new Alert("Lo sentimos pero no hemos podido guardar el material", Alert.TIPO_PRIMARY);
+			}
+			request.setAttribute("material", material);
+			dispatcher = request.getRequestDispatcher(VIEW_FORM);
 		} else {
-			alert = new Alert("Modificado Material id: " + id, Alert.TIPO_PRIMARY);
-			material.setId(id);
-			material.setNombre("Modificado");
+
+			if (nombre == "") {
+				alert = new Alert("Por favor rellene el campo nombre con un nombre válido", Alert.TIPO_WARNING);
+				request.setAttribute("material", material);
+				dispatcher = request.getRequestDispatcher(VIEW_FORM);
+			} else if (precio < 0 || precio1.equals("")) {
+				alert = new Alert("Por favor rellene el campo precio con un precio válido", Alert.TIPO_WARNING);
+				request.setAttribute("material", material);
+				dispatcher = request.getRequestDispatcher(VIEW_FORM);
+			}
 		}
 
-		request.setAttribute("materiales", material);
-		dispatcher = request.getRequestDispatcher(VIEW_FORM);
 	}
 
 	private void buscar(HttpServletRequest request) {
@@ -159,8 +178,14 @@ public class MaterialesBackofficeController extends HttpServlet {
 	}
 
 	private void eliminar(HttpServletRequest request) {
-		alert = new Alert("MAterial Eliminado id " + id, Alert.TIPO_PRIMARY);
+
+		if (dao.delete(id)) {
+			alert = new Alert("Material Eliminado id " + id, Alert.TIPO_PRIMARY);
+		} else {
+			alert = new Alert("Error Eliminando, sentimos las molestias ", Alert.TIPO_WARNING);
+		}
 		listar(request);
+
 	}
 
 	private void listar(HttpServletRequest request) {
@@ -173,13 +198,13 @@ public class MaterialesBackofficeController extends HttpServlet {
 	private void mostrarFormulario(HttpServletRequest request) {
 		Material material = new Material();
 		if (id > -1) {
+			material = dao.getById(id);
 			alert = new Alert("Mostramos Detalle id:" + id, Alert.TIPO_WARNING);
 
 		} else {
 			alert = new Alert("Nuevo Producto", Alert.TIPO_WARNING);
 		}
-		request.setAttribute("materiales", dao.getAll());
-		request.setAttribute("id_material", id);
+		request.setAttribute("material", material);
 		// request.setAttribute("id_nombre", o);
 		dispatcher = request.getRequestDispatcher(VIEW_FORM);
 	}
@@ -203,6 +228,7 @@ public class MaterialesBackofficeController extends HttpServlet {
 		} else {
 			nombre = "";
 		}
+
 		if (request.getParameter("precio") != null) {
 			precio = Float.parseFloat(request.getParameter("precio"));
 		} else {

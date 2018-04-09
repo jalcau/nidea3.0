@@ -65,7 +65,7 @@ public class LoginController extends HttpServlet {
 				session.setMaxInactiveInterval(SESSION_EXPIRATION);
 
 				view = "backoffice/index.jsp";
-				alert = new Alert("Ongi Etorri", Alert.TIPO_PRIMARY);
+				alert = new Alert("Bienvenido", Alert.TIPO_PRIMARY);
 			} else {
 
 				view = "login.jsp";

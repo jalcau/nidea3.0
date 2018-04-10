@@ -145,29 +145,29 @@ public class MaterialesBackofficeController extends HttpServlet {
 		String precio1 = String.valueOf(precio);
 
 		material.setPrecio(precio);
-		if(!dao.busquqeda(nombre)) {
-		if (nombre != "" && precio > 0) {
-			if (dao.save(material)) {// Llamamos al save de materialDAo
-				alert = new Alert("Material guardado", Alert.TIPO_PRIMARY);
+		if (!dao.busquqeda(nombre)) {
+			if (nombre != "" && precio > 0) {
+				if (!dao.save(material)) {// Llamamos al save de materialDAo
+					alert = new Alert("Material guardado", Alert.TIPO_PRIMARY);
 
+				} else {
+					alert = new Alert("Lo sentimos pero no hemos podido guardar el material", Alert.TIPO_PRIMARY);
+				}
+				request.setAttribute("material", material);
+				dispatcher = request.getRequestDispatcher(VIEW_FORM);
 			} else {
-				alert = new Alert("Lo sentimos pero no hemos podido guardar el material", Alert.TIPO_PRIMARY);
-			}
-			request.setAttribute("material", material);
-			dispatcher = request.getRequestDispatcher(VIEW_FORM);
-		} else {
 
-			if (nombre == "") {
-				alert = new Alert("Por favor rellene el campo nombre con un nombre válido", Alert.TIPO_WARNING);
-				request.setAttribute("material", material);
-				dispatcher = request.getRequestDispatcher(VIEW_FORM);
-			} else if (precio < 0 || precio1.equals("")) {
-				alert = new Alert("Por favor rellene el campo precio con un precio válido", Alert.TIPO_WARNING);
-				request.setAttribute("material", material);
-				dispatcher = request.getRequestDispatcher(VIEW_FORM);
+				if (nombre == "") {
+					alert = new Alert("Por favor rellene el campo nombre con un nombre válido", Alert.TIPO_WARNING);
+					request.setAttribute("material", material);
+					dispatcher = request.getRequestDispatcher(VIEW_FORM);
+				} else if (precio < 0 || precio1.equals("")) {
+					alert = new Alert("Por favor rellene el campo precio con un precio válido", Alert.TIPO_WARNING);
+					request.setAttribute("material", material);
+					dispatcher = request.getRequestDispatcher(VIEW_FORM);
+				}
 			}
-		}
-		}else {
+		} else {
 			alert = new Alert("Lo sentimos pero el material ya existe", Alert.TIPO_DANGER);
 			request.setAttribute("material", material);
 			dispatcher = request.getRequestDispatcher(VIEW_FORM);
@@ -232,12 +232,6 @@ public class MaterialesBackofficeController extends HttpServlet {
 			nombre = request.getParameter("nombre");
 		} else {
 			nombre = "";
-		}
-
-		if (request.getParameter("precio") != null) {
-			precio = Float.parseFloat(request.getParameter("precio"));
-		} else {
-			precio = 0;
 		}
 
 	}

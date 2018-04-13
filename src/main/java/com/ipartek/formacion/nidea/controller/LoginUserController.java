@@ -1,9 +1,7 @@
 package com.ipartek.formacion.nidea.controller;
 
 import java.io.IOException;
-import java.util.HashMap;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.ipartek.formacion.nidea.pojo.Alert;
+import com.ipartek.formacion.nidea.pojo.Usuario;
 
 /**
  * Servlet implementation class LoginUserController
@@ -53,18 +52,17 @@ public class LoginUserController extends HttpServlet {
 			String usuario = request.getParameter("nombre");
 
 			HttpSession session = request.getSession();
-			session.setAttribute("nombre", usuario);
+			session.setAttribute("uPublic", new Usuario(usuario, identificador));
 			view = "frontend/index.jsp";
 			// recoger usuarios conectados
-			ServletContext ctx = request.getServletContext();
-			HashMap<Integer, String> usuarios = null;
-			if (ctx.getAttribute("usuarios_conectados") == null) {
-				usuarios = new HashMap<Integer, String>();
-			} else {
-				usuarios = (HashMap<Integer, String>) ctx.getAttribute("usuarios_conectados");
-			}
-			usuarios.put(identificador, usuario);
-			ctx.setAttribute("usuarios_conectados", usuarios);
+			/*
+			 * ServletContext ctx = request.getServletContext(); HashMap<Integer, String>
+			 * usuarios = null; if (ctx.getAttribute("usuarios_conectados") == null) {
+			 * usuarios = new HashMap<Integer, String>(); } else { usuarios =
+			 * (HashMap<Integer, String>) ctx.getAttribute("usuarios_conectados"); }
+			 * usuarios.put(identificador, usuario); ctx.setAttribute("usuarios_conectados",
+			 * usuarios);
+			 */
 
 		} catch (Exception e) {
 			e.printStackTrace();

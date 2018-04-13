@@ -2,7 +2,7 @@
 <%@include file="/templates/navbar.jsp" %>
 <%@include file="/templates/alert.jsp" %>
 
-
+<script>setTimeout(function () {location.reload(1);}, 5000)</script>
 <h1>Bienvenido ${nombre} !!!</h1> 
 ${applicationScope.usuarios_conectados } 
 <%

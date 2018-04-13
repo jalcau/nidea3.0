@@ -1,6 +1,6 @@
 package com.impartek.nidea.ejemplos;
 
-public abstract class vehiculo {
+public abstract class vehiculo implements Ordenable {
 	private int puertas;
 	private String color;
 
@@ -40,5 +40,11 @@ public abstract class vehiculo {
 
 	public void setColor(String color) {
 		this.color = color;
+	}
+
+	@Override
+	public int getValor() {
+
+		return this.puertas;
 	}
 }

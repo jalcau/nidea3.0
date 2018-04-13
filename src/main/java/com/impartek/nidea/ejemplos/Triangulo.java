@@ -18,4 +18,10 @@ public class Triangulo extends ObjetoGrafico {
 
 	}
 
+	@Override
+	public int getValor() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

@@ -140,40 +140,47 @@ public class MaterialesBackofficeController extends HttpServlet {
 
 	private void guardar(HttpServletRequest request) throws SQLException {
 		Material material = new Material();
-		material.setId(id);
-		material.setNombre(nombre);
-		String precio1 = String.valueOf(precio);
-
-		material.setPrecio(precio);
-		if (!dao.busquqeda(nombre)) {
-			if (nombre != "" && precio > 0) {
-				if (!dao.save(material)) {// Llamamos al save de materialDAo
+		try {
+			material.setId(id);
+			material.setNombre(nombre);
+		
+			if (request.getParameter("precio") != null) {
+				precio = Float.parseFloat(request.getParameter("precio"));
+				material.setPrecio(precio);
+			}
+			
+				if (nombre != "" && precio > 0) {
+					if (dao.save(material)) {// Llamamos al save de materialDAo
 					alert = new Alert("Material guardado", Alert.TIPO_PRIMARY);
 
-				} else {
-					alert = new Alert("Lo sentimos pero no hemos podido guardar el material", Alert.TIPO_PRIMARY);
+				} 	else {
+					alert = new Alert("Lo sentimos pero no hemos podido guardar el material", Alert.TIPO_WARNING);
 				}
 				request.setAttribute("material", material);
 				dispatcher = request.getRequestDispatcher(VIEW_FORM);
-			} else {
+				} else {
 
 				if (nombre == "") {
 					alert = new Alert("Por favor rellene el campo nombre con un nombre válido", Alert.TIPO_WARNING);
 					request.setAttribute("material", material);
 					dispatcher = request.getRequestDispatcher(VIEW_FORM);
-				} else if (precio < 0 || precio1.equals("")) {
+				} else if (precio < 0 ) {
 					alert = new Alert("Por favor rellene el campo precio con un precio válido", Alert.TIPO_WARNING);
 					request.setAttribute("material", material);
 					dispatcher = request.getRequestDispatcher(VIEW_FORM);
 				}
-			}
-		} else {
-			alert = new Alert("Lo sentimos pero el material ya existe", Alert.TIPO_DANGER);
+		}}  catch (NumberFormatException e) {
+			e.printStackTrace();
+			alert = new Alert("<b>" + request.getParameter("precio") + "</b> no es un precio correcto",
+					Alert.TIPO_WARNING);
+		}
+			
+
 			request.setAttribute("material", material);
 			dispatcher = request.getRequestDispatcher(VIEW_FORM);
 		}
-
-	}
+		
+	
 
 	private void buscar(HttpServletRequest request) {
 		alert = new Alert("Busqueda para: " + search, Alert.TIPO_PRIMARY);

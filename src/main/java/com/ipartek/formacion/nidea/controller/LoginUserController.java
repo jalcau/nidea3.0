@@ -50,9 +50,12 @@ public class LoginUserController extends HttpServlet {
 
 			int identificador = Integer.parseInt(request.getParameter("id"));
 			String usuario = request.getParameter("nombre");
+			Usuario usuario_creado = new Usuario(usuario, identificador);
 
 			HttpSession session = request.getSession();
-			session.setAttribute("uPublic", new Usuario(usuario, identificador));
+			session.setMaxInactiveInterval(15);
+			session.setAttribute("uPublic", usuario_creado);
+
 			view = "frontend/index.jsp";
 			// recoger usuarios conectados
 			/*

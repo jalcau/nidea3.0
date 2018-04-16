@@ -30,43 +30,45 @@ public class UsuariosConectadoslistener implements HttpSessionListener, HttpSess
 	 * @see HttpSessionListener#sessionDestroyed(HttpSessionEvent)
 	 */
 	public void sessionDestroyed(HttpSessionEvent se) {
-		// if (event.getName().equals("uPublic")) {
+		if (se.getSession().getAttribute("uPublic") != null) {
 
-		// ServletContext ctx = event.getSession().getServletContext();
-		HashMap<Integer, Usuario> hmUsuarios = null;
-		// if (ctx.getAttribute("usuarios_conectados") == null) {
-		hmUsuarios = new HashMap<Integer, Usuario>();
+			Usuario u = (Usuario) se.getSession().getAttribute("uPublic");
 
+			ServletContext ctx = se.getSession().getServletContext();
+
+			if (ctx.getAttribute("usuarios_conectados") != null) {
+				HashMap<Integer, Usuario> hmUsuarios = (HashMap<Integer, Usuario>) ctx
+						.getAttribute("usuarios_conectados");
+				hmUsuarios.remove(u.getId());
+				ctx.setAttribute("usuarios_conectados", hmUsuarios);
+			}
+		}
 	}
-	// Usuario u = (Usuario) event.getValue();
-	// hmUsuarios.remove(u.getId(), u);
-	// ctx.setAttribute("usuarios_conectados", hmUsuarios);
-
-	// }
-	// }
 
 	/**
 	 * @see HttpSessionAttributeListener#attributeAdded(HttpSessionBindingEvent)
 	 */
 	public void attributeAdded(HttpSessionBindingEvent event) {
-		// comproba que sea atributo == uPublic
-
-		if (event.getName().equals("uPublic")) {
+		// comprobar que sea atributo == uPublic
+		if ("uPublic".equals(event.getName())) {
 
 			ServletContext ctx = event.getSession().getServletContext();
 			HashMap<Integer, Usuario> hmUsuarios = null;
 			if (ctx.getAttribute("usuarios_conectados") == null) {
 				hmUsuarios = new HashMap<Integer, Usuario>();
-
+			} else {
+				hmUsuarios = (HashMap<Integer, Usuario>) ctx.getAttribute("usuarios_conectados");
 			}
+
 			Usuario u = (Usuario) event.getValue();
 			hmUsuarios.put(u.getId(), u);
 			ctx.setAttribute("usuarios_conectados", hmUsuarios);
 
 		}
-		// contexto de la App
 
+		// contexto de la App
 		// event.getSession().getServletContext()
+
 	}
 
 	/**

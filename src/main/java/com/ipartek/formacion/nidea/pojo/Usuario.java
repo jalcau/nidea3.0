@@ -9,10 +9,11 @@ public class Usuario {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Usuario(String nombre, int identificador) {
+	public Usuario(String usuario, int identificador) {
+		// TODO Auto-generated constructor stub
 		this();
-		this.nombre = nombre;
-		id = identificador;
+		this.nombre = usuario;
+		this.id = identificador;
 	}
 
 	public String getNombre() {
@@ -25,6 +26,11 @@ public class Usuario {
 
 	public int getId() {
 		return id;
+	}
+
+	@Override
+	public String toString() {
+		return "Usuario [nombre=" + nombre + ", id=" + id + "]";
 	}
 
 	public void setId(int id) {

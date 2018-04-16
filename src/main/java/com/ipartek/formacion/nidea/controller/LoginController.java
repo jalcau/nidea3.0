@@ -20,6 +20,7 @@ public class LoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private String view = "";
+
 	private Alert alert = new Alert();
 
 	private static final String USER = "admin";

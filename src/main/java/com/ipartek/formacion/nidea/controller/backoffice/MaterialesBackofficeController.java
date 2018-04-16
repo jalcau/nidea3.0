@@ -98,6 +98,8 @@ public class MaterialesBackofficeController extends HttpServlet {
 	 */
 	private void doProcess(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		alert = null;
+		
 
 		try {
 			recogerParametros(request);

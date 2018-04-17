@@ -10,11 +10,11 @@
 
       <div class="form-label-group">
             <label for="usuario">Id Usuario:</label>
-        <input type="text" class="form-control"
+        <input type="number" class="form-control"
                name="id" 
                placeholder="ID Usuario" 
               
-               value="3"
+               
                style:text-decoration: underline>
                
   

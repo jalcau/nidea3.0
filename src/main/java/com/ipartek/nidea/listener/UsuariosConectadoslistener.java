@@ -49,26 +49,22 @@ public class UsuariosConectadoslistener implements HttpSessionListener, HttpSess
 	 * @see HttpSessionAttributeListener#attributeAdded(HttpSessionBindingEvent)
 	 */
 	public void attributeAdded(HttpSessionBindingEvent event) {
-		// comprobar que sea atributo == uPublic
-		if ("uPublic".equals(event.getName())) {
-
-			ServletContext ctx = event.getSession().getServletContext();
-			HashMap<Integer, Usuario> hmUsuarios = null;
-			if (ctx.getAttribute("usuarios_conectados") == null) {
-				hmUsuarios = new HashMap<Integer, Usuario>();
-			} else {
-				hmUsuarios = (HashMap<Integer, Usuario>) ctx.getAttribute("usuarios_conectados");
+		// comprobar que sea atributo==uPublic
+		String evento = event.getName();
+		if ("uPublic".equals(evento)) {
+			// contexto de la aplicion
+			ServletContext context = event.getSession().getServletContext();
+			HashMap<Integer, Usuario> usuarios = (HashMap<Integer, Usuario>) context
+					.getAttribute("usuarios_conectados");
+			if (usuarios == null) {
+				usuarios = new HashMap<Integer, Usuario>();
 			}
-
-			Usuario u = (Usuario) event.getValue();
-			hmUsuarios.put(u.getId(), u);
-			ctx.setAttribute("usuarios_conectados", hmUsuarios);
-
+			Usuario newUser = (Usuario) event.getValue();
+			// guardar usuario en hashMap
+			usuarios.put(newUser.getId(), newUser);
+			// guardar hashMap en el contexto Servlets
+			context.setAttribute("usuarios_conectados", usuarios);
 		}
-
-		// contexto de la App
-		// event.getSession().getServletContext()
-
 	}
 
 	/**

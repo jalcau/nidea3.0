@@ -1,7 +1,9 @@
 package com.ipartek.formacion.nidea.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,8 +22,13 @@ public class LoginUserController extends HttpServlet {
 	private String view = "";
 
 	private static final long serialVersionUID = 1L;
-	private Alert alert = new Alert();
+	private HashMap<Integer, String> usuarios = null;
 
+	@Override
+	public void init(ServletConfig config) throws ServletException {
+		super.init(config);
+		usuarios = new HashMap<Integer, String>();
+	}
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -46,14 +53,16 @@ public class LoginUserController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		try {
-
-			int identificador = Integer.parseInt(request.getParameter("id"));
-			String usuario = request.getParameter("nombre");
-			Usuario usuario_creado = new Usuario(usuario, identificador);
-
+		
 			HttpSession session = request.getSession();
 			session.setMaxInactiveInterval(15);
+			int identificador = Integer.parseInt(request.getParameter("id"));
+			String usuario = request.getParameter("nombre");
+			Usuario usuario_creado = new Usuario();
+			usuario_creado.setId(identificador);
+			usuario_creado.setNombre(usuario);
+
+		
 			session.setAttribute("uPublic", usuario_creado);
 
 			view = "frontend/index.jsp";
@@ -67,14 +76,10 @@ public class LoginUserController extends HttpServlet {
 			 * usuarios);
 			 */
 
-		} catch (Exception e) {
-			e.printStackTrace();
-			view = "LoginUser.jsp";
 
-		} finally {
 			request.getRequestDispatcher(view).forward(request, response);
 
-		}
+		
 
 	}
 }

@@ -6,6 +6,8 @@ public class Usuario {
 
 	public Usuario() {
 		super();
+		this.id = -1;
+		this.nombre = "";
 		// TODO Auto-generated constructor stub
 	}
 

@@ -55,7 +55,7 @@ public class LoginUserController extends HttpServlet {
 			throws ServletException, IOException {
 		
 			HttpSession session = request.getSession();
-			session.setMaxInactiveInterval(15);
+			session.setMaxInactiveInterval(1);
 			int identificador = Integer.parseInt(request.getParameter("id"));
 			String usuario = request.getParameter("nombre");
 			Usuario usuario_creado = new Usuario();

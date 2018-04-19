@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.ipartek.formacion.nidea.pojo.Rol;
 import com.ipartek.formacion.nidea.pojo.Usuario;
 
 public class UsuarioDAO implements Persistible<Usuario> {
@@ -28,46 +29,32 @@ public class UsuarioDAO implements Persistible<Usuario> {
 		return INSTANCE;
 	}
 
-	@Override
-	public ArrayList<Usuario> getAll() {
-		ArrayList<Usuario> lista = new ArrayList<Usuario>();
-		String sql = "SELECT `id`, `nombre`, `password` FROM `usuario` ORDER BY `id` DESC LIMIT 500";
-		try (Connection con = ConnectionManager.getConnection();
-				PreparedStatement pst = con.prepareStatement(sql);
-				ResultSet rs = pst.executeQuery();) {
-			Usuario u = null;
-			while (rs.next()) {
-				u = mapper(rs);
-				lista.add(u);
-			}
+	/**
+	 * Buscamos un usuario por nombre y password
+	 * 
+	 * @param nombre
+	 *            String nombre del Usuario
+	 * @param pass
+	 *            String
+	 * @return USuario si existe, null si no lo encuentra
+	 */
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return lista;
-	}
-
-	@Override
-	public Usuario getById(int id) {
-		Usuario usuario = null;
-		String sql = "SELECT `id`, `nombre`, `precio` FROM `nombre` WHERE `id`=? ;";
+	public Usuario check(String nombre, String pass) throws SQLException {
+		Usuario resul = null;
+		String sql = "SELECT u.id as 'usuario_id', u.nombre as 'usuario_nombre', u.password, r.id as 'rol_id', r.nombre as 'rol_nombre' "
+				+ "FROM usuario as u, rol as r " + "WHERE u.id_rol = r.id AND u.nombre=? and u.password = ?;";
 		try (Connection con = ConnectionManager.getConnection(); PreparedStatement pst = con.prepareStatement(sql);) {
-			pst.setInt(1, id);
+			pst.setString(1, nombre);
+			pst.setString(2, pass);
 			try (ResultSet rs = pst.executeQuery()) {
 				while (rs.next()) {
-					usuario = new Usuario();
-					usuario.setId(rs.getInt("id"));
-					usuario.setNombre(rs.getString("nombre"));
-					// usuario.setPrecio(rs.getFloat("precio"));
+					resul = mapper(rs);
 				}
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-
 		}
-
-		return usuario;
+		return resul;
 	}
 
 	@Override
@@ -84,14 +71,36 @@ public class UsuarioDAO implements Persistible<Usuario> {
 
 	@Override
 	public Usuario mapper(ResultSet rs) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		Usuario u = new Usuario();
+		u.setId(rs.getInt("usuario_id"));
+		u.setNombre(rs.getString("usuario_nombre"));
+		u.setPass(rs.getString("password"));
+
+		// Rol de usuario
+		Rol rol = new Rol();
+		rol.setId(rs.getInt("rol_id"));
+		rol.setNombre(rs.getString("rol_nombre"));
+		u.setRol(rol);
+
+		return u;
 	}
 
 	@Override
 	public boolean busquqeda(String nombre) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public ArrayList<Usuario> getAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Usuario getById(int id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

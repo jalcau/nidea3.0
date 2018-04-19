@@ -19,17 +19,22 @@
       <a class="btn btn-outline-success" href="LoginUserController">LoginUser</a>
       
       </c:if>
-          <c:if test="${!empty usuario}">
+         
+         <c:if test="${!empty usuario}">
+		 <c:if test="${usuario.nombre == 'administrador'}" >
       <span class="badge badge-pill badge-primary">${usuario}</span>
      
         <a href="backoffice/materiales">Materiales</a>
        <a class="btn btn-outline-danger" href="logout">Logout</a>
      
+       </c:if>
        
+  	 <c:if test="${usuario.nombre != 'administrador'}" >
       
+      <span class="badge badge-pill badge-primary">${usuario}</span>
+      <a class="btn btn-outline-danger" href="logout">Logout</a>
       </c:if>
-      
-      
+      </c:if>
     </div>
     
     <div class="container">

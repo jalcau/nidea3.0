@@ -6,6 +6,8 @@
 
 
 <h1>Backoffice</h1>
+<a href="backoffice/materiales">Materiales</a>
+<a href="backoffice/roles">Roles</a>
 <%
 //ArrayList<Material> lista = (ArrayList<Material>)request.getAttribute("materiales");
 //Mejor usamos EL => Expresion Language => ${}
